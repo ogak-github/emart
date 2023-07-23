@@ -16,7 +16,7 @@ class Product {
 
     final int id;
     final String title;
-    final String price;
+    final double price;
     final String category;
     final String description;
     final String image;
@@ -24,7 +24,7 @@ class Product {
     factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
         title: json["title"],
-        price: json["price"],
+        price: json["price"].toDouble(),
         category: json["category"],
         description: json["description"],
         image: json["image"],
@@ -33,7 +33,7 @@ class Product {
     Map<String, dynamic> toJson() => {
         "id": id,
         "title": title,
-        "price": price,
+        "price": price.toDouble(),
         "category": category,
         "description": description,
         "image": image,

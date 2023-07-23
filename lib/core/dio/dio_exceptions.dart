@@ -15,7 +15,8 @@ class DioExceptions implements Exception {
         message = "Receive Timeout";
         break;
       case DioErrorType.badResponse:
-        message = _responseError(
+        message = //dioError.response?.data;
+        _responseError(
           dioError.response?.statusCode,
           dioError.response?.data,
         );
@@ -35,19 +36,19 @@ class DioExceptions implements Exception {
   String _responseError(int? statusCode, dynamic error) {
     switch (statusCode) {
       case 400:
-        return error['message'] ?? 'Bad request';
+        return 'Bad request';
       case 401:
-        return error['message'] ?? 'Unauthorized';
+        return 'Unauthorized';
       case 403:
-        return error['message'] ?? 'Forbidden';
+        return 'Forbidden';
       case 404:
-        return error['message'];
+        return 'Not Found';
       case 420:
         return 'Session Expired';
       case 500:
-        return error['message'] ?? 'Internal server error';
+        return 'Internal server error';
       case 502:
-        return error['message'] ?? 'Server unavailable';
+        return 'Server unavailable';
       default:
         return "Please try again later";
     }

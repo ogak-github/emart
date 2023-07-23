@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:emart/core/constant/variables.dart';
 import 'package:emart/core/dio/dio_interceptor.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class DioClient {
   final Dio _dio;
@@ -11,7 +12,7 @@ class DioClient {
       ..options.receiveTimeout = Variables.receiveTimeout
       ..options.responseType = ResponseType.json
       ..interceptors.add(DioInterceptor())
-      ..interceptors.add(LogInterceptor(
+      ..interceptors.add(PrettyDioLogger(
         request: true,
         requestHeader: true,
         requestBody: true,
