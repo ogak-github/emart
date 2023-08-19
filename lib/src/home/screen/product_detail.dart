@@ -1,3 +1,5 @@
+import 'package:emart/src/home/screen/button_action.dart';
+import 'package:emart/src/home/screen/detail_card.dart';
 import 'package:emart/src/home/state/single_product_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -9,39 +11,18 @@ class ProductDetail extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final product = ref.watch(singleProductStateProvider(id));
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      //extendBodyBehindAppBar: true,
       appBar: AppBar(
-        forceMaterialTransparency: true,
-      ),
+          forceMaterialTransparency: true,
+          ),
       body: product.when(
         data: (data) {
-          return Padding(
-            padding: const EdgeInsets.only(top: 50),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image.network(
-                    data!.image,
-                    height: 200,
-                    width: double.infinity,
-                  ),
-                  Text(
-                    data.title,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  Text(
-                    "\$ ${data.price.toString()}",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  Text(
-                    data.description,
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  Text(data.category),
-                  Text(data.rating.rate.toString())
-                ],
-              ),
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                DetailCard(product: data!),
+              ],
             ),
           );
         },
@@ -49,6 +30,9 @@ class ProductDetail extends HookConsumerWidget {
         loading: () => const Center(
           child: CircularProgressIndicator(),
         ),
+      ),
+      bottomNavigationBar: const BottomAppBar(
+        child: ButtonAction(),
       ),
     );
   }

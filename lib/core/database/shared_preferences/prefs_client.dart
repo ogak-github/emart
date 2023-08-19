@@ -5,35 +5,24 @@ class PrefsClient {
 
   const PrefsClient(this._sharedPreferences);
 
-  Future<void> clear() async {
-    await _sharedPreferences.load();
-    await _sharedPreferences.clear();
+  Future<bool> removeKey(String key) async {
+    final remove = await _sharedPreferences.remove(key);
+    return remove;
   }
 
   Future<void> saveAuthToken(String authToken) async {
-    await _sharedPreferences.load();
     await _sharedPreferences.setString(PrefKey.authToken, authToken);
   }
 
-  String get getAuthToken {
-    _sharedPreferences.load();
-    return _sharedPreferences.getString(PrefKey.authToken) ?? "";
-  }
-
   Future<bool> removeAuthToken() async {
-    await _sharedPreferences.load();
     return _sharedPreferences.remove(PrefKey.authToken);
   }
 
-  Future<void> saveIsLogin(bool value) async {
-    await _sharedPreferences.load();
-    await _sharedPreferences.setBool(PrefKey.isLogin, value);
+  Future<String?> getAuthToken(String key) async {
+    final getToken = await _sharedPreferences.getString(key);
+    return getToken;
   }
 
-  bool get isLogin {
-    _sharedPreferences.load();
-    return _sharedPreferences.getBool(PrefKey.isLogin) ?? false;
-  }
 }
 
 mixin PrefKey {

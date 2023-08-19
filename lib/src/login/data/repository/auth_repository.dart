@@ -51,9 +51,4 @@ class AuthRepository implements AuthInterface {
   void logout() {
     _prefsClient.removeAuthToken();
   }
-
-  @override
-  bool checkAuth() {
-    return _prefsClient.isLogin;
-  }
 }

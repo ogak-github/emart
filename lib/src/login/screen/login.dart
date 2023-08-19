@@ -30,7 +30,6 @@ class Login extends HookConsumerWidget {
             ),
           );
       if (login.code == 200 && login.token.isNotEmpty) {
-        await saveLogin.saveIsLogin(true);
         ref.invalidate(routerProvider);
       }
     }

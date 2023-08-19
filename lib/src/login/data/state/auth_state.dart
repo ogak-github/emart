@@ -26,23 +26,17 @@ class AuthState extends _$AuthState implements AuthInterface {
       _showErrorSnackbar(result.token);
     }
     await prefsClient.saveAuthToken(result.token);
-    await prefsClient.saveIsLogin(result.code == 200);
-    print("Auth Repository => getToken: ${prefsClient.getAuthToken}");
-    print("Auth Repository => isLogin : ${prefsClient.isLogin}");
-    return result;
-  }
 
-  @override
-  bool checkAuth() {
-    final prefsClient = ref.read(prefsClientProvider);
-    return prefsClient.isLogin;
+    print("Auth Repository => getToken: ${prefsClient.getAuthToken}");
+
+    return result;
   }
 
   @override
   void logout() async {
     final prefsClient = ref.read(prefsClientProvider);
     await prefsClient.removeAuthToken();
-    await ref.read(prefsClientProvider).saveIsLogin(false);
+
     ref.invalidate(routerProvider);
   }
 

@@ -1,3 +1,4 @@
+import 'package:emart/core/database/shared_preferences/prefs_client.dart';
 import 'package:emart/core/shared/shared_provider.dart';
 import 'package:emart/src/home/screen/product_detail.dart';
 import 'package:emart/src/login/screen/login.dart';
@@ -12,12 +13,20 @@ final navigatorKeyProvider =
 final routerProvider = Provider<GoRouter>((ref) {
   final navigatorKey = ref.watch(navigatorKeyProvider);
   final prefs = ref.watch(prefsClientProvider);
-  final sprefs = ref.watch(prefsProvider).load();
 
   final routes = GoRouter(
     debugLogDiagnostics: true,
     navigatorKey: navigatorKey,
     initialLocation: Routes.home,
+    redirect: (context, state) async {
+      if (state.path != Routes.login) {
+        final user = await prefs.getAuthToken(PrefKey.authToken);
+        if (user == null || user == "") {
+          return Routes.login;
+        }
+      }
+      return null;
+    },
     routes: [
       GoRoute(
         path: Routes.home,
@@ -26,11 +35,12 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.login,
         builder: ((context, state) => const Login()),
-        redirect: (context, state) {
-          if (prefs.isLogin == true) {
-            return Routes.home;
+        redirect: (context, state) async {
+          final token = await prefs.getAuthToken(PrefKey.authToken);
+          if (token == null || token == "") {
+            return null;
           }
-          return null;
+          return Routes.home;
         },
       ),
       GoRoute(
@@ -41,18 +51,6 @@ final routerProvider = Provider<GoRouter>((ref) {
         },
       ),
     ],
-    redirect: (context, state) {
-      return null;
-
-      /*     if (prefs.isLogin != true && prefs.getAuthToken.isEmpty) {
-        return Routes.login;
-      } else if (state.location == '/') {
-        // User is authenticated and accessing the root path, redirect to home
-        return Routes.home;
-      } else {
-        return null;
-      } */
-    },
   );
 
   return routes;

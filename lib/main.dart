@@ -20,7 +20,7 @@ class MyApp extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final goRouterConfig = ref.watch(routerProvider);
     final prefs = ref.watch(prefsClientProvider);
-    print("INI STATE ISLOGIN: ${prefs.isLogin}");
+    
     print("INI TOKEN: ${prefs.getAuthToken}");
     return MaterialApp.router(
       routerConfig: goRouterConfig,

@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:emart/core/constant/variables.dart';
 import 'package:emart/core/database/shared_preferences/prefs_client.dart';

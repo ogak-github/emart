@@ -1,68 +1,74 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Prefs {
-  static SharedPreferences? _prefs;
-
-  Future<SharedPreferences> load() async {
-    _prefs = await SharedPreferences.getInstance();
-    return _prefs!;
-  }
-
-  Future<void> initialize() async {
-    await load();
-  }
-
   Future<void> setString(String key, String value) async {
-    await _prefs?.setString(key, value);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(key, value);
   }
 
   Future<void> setInt(String key, int value) async {
-    await _prefs?.setInt(key, value);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(key, value);
   }
 
   Future<void> setDouble(String key, double value) async {
-    await _prefs?.setDouble(key, value);
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setDouble(key, value);
   }
 
   Future<void> setBool(String key, bool value) async {
-    await _prefs?.setBool(key, value);
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setBool(key, value);
   }
 
-  String? getString(String key, {String? def}) {
+  Future<String?> getString(String key, {String? def}) async {
+    final prefs = await SharedPreferences.getInstance();
+
     String? val;
-    val ??= _prefs?.getString(key);
+    val ??= prefs.getString(key);
     val ??= def;
     return val;
   }
 
-  int? getInt(String key, {int? def}) {
+  Future<int?> getInt(String key, {int? def}) async {
+    final prefs = await SharedPreferences.getInstance();
+
     int? val;
-    val ??= _prefs?.getInt(key);
+    val ??= prefs.getInt(key);
     val ??= def;
     return val;
   }
 
-  double? getDouble(String key, {double? def}) {
+  Future<double?> getDouble(String key, {double? def}) async {
+    final prefs = await SharedPreferences.getInstance();
     double? val;
-    val ??= _prefs?.getDouble(key);
+    val ??= prefs.getDouble(key);
     val ??= def;
     return val;
   }
 
-  bool? getBool(String key, {bool? def}) {
+  Future<bool?> getBool(String key, {bool? def}) async {
+    final prefs = await SharedPreferences.getInstance();
+
     bool? val;
-    val ??= _prefs?.getBool(key);
+    val ??= prefs.getBool(key);
     val ??= def;
     return val;
   }
 
   Future<bool> remove(String key) async {
-    await _prefs?.remove(key);
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.remove(key);
     return true;
   }
 
   Future<bool> clear() async {
-    await _prefs?.clear();
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.clear();
     return true;
   }
 }
